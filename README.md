@@ -29,12 +29,19 @@ Add root to /etc/sudoers.d/ and type in root ALL=(ALL:ALL) ALLby command sudo na
 5.Update all currently installed packages
 
 $sudo apt-get update
-$sudo sudo apt-get upgrade 
+
+$sudo sudo apt-get upgrade
+
 Change the SSH port from 22 to 2200 and other SSH configuration required from grading rubic
+
 nano /etc/ssh/sshd_config add port 2200 below port 22
+
 while in the file also change PermitRootLogin prohibit-password to PermitRootLogin no to disallow root login
+
 Change PasswordAuthentication from no to yes. We will change back after finishing SHH login setup
+
 save file(nano: ctrl+x, Y, Enter)
+
 restart ssh servicesudo service ssh reload
 
 Create SSH keys and copy to server manually:
@@ -65,41 +72,63 @@ save file(nano: ctrl+x, Y, Enter)
 9.(UFW) to only allow incoming connections for SSH (port 2200), HTTP (port 80), and NTP (port 123)
 
 Check UFW status to make sure its inactivesudo ufw status
+
 Deny all incoming by defaultsudo ufw default deny incoming
+
 Allow outgoing by defaultsudo ufw default allow outgoing
+
 Allow SSH sudo ufw allow ssh
+
 Allow SSH on port 2200sudo ufw allow 2200/tcp
+
 Allow HTTP on port 80sudo ufw allow 80/tcp
+
 Allow NTP on port 123sudo ufw allow 123/udp
+
 Turn on firewallsudo ufw enable
+
 Configure the local timezone to UTC
 
 run sudo dpkg-reconfigure tzdata from prompt: select none of the above. Then select UTC.
 Install and configure Apache to serve a Python mod_wsgi application
 
 10.sudo apt-get install apache2 Check if "It works!" at you public IP address given during setup.
+
 install mod_wsgi: sudo apt-get install libapache2-mod-wsgi
+
 configure Apache to handle requests using the WSGI module sudo nano /etc/apache2/sites-enabled/000-default.conf
+
 add WSGIScriptAlias / /var/www/html/myapp.wsgi before </VirtualHost> closing line
+
 save file(nano: ctrl+x, Y, Enter)
+
 Restart Apache sudo apache2ctl restart
 
 11.
 install git
 
 sudo apt-get install git
+
 install python dev and verify WSGI is enabled
 
 Install python-dev packagesudo apt-get install python-dev
+
 Verify wsgi is enabled sudo a2enmod wsgi
+
 Create flask app taken from digitalocean
 
 cd /var/www
+
 sudo mkdir catalog
+
 cd catalog
+
 sudo mkdir catalog
+
 cd catalog
+
 sudo mkdir static templates
+
 sudo nano __init__.py
  12.
  from flask import Flask
@@ -110,20 +139,30 @@ def hello():
 if __name__ == "__main__":
 app.run()
 install flask
+
 13.
 sudo apt-get install python-pip
+
 sudo pip install virtualenv
+
 sudo virtualenv venv
+
 sudo chmod -R 777 venv
+
 source venv/bin/activate
+
 pip install Flask
+
 python __init__.py
+
 deactivate
 
 13.Configure And Enable New Virtual Host
 
 Create host config file sudo nano /etc/apache2/sites-available/catalog.conf
+
 paste the following:
+
 <VirtualHost *:80>
   ServerName 107.21.71.71
   ServerAdmin admin@107.21.71.71
@@ -141,8 +180,6 @@ paste the following:
   LogLevel warn
   CustomLog ${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
-
-
 
 Create the wsgi file
      `cd /var/www/catalog`
@@ -165,18 +202,27 @@ sudo git clone https://github.com/p123456/CatalogProject
 make .git inaccessible
 
 from cd /var/www/catalog/ create .htaccess file sudo nano .htaccess
+
 paste in RedirectMatch 404 /\.git
+
 save file(nano: ctrl+x, Y, Enter)
 
 15.install dependencies:
 
 source venv/bin/activate
+
 pip install httplib2
+
 pip install requests
+
 sudo pip install --upgrade oauth2client
+
 sudo pip install sqlalchemy
+
 pip install Flask-SQLAlchemy
+
 sudo pip install python-psycopg2
+
 If you used any other packages in your project be sure to install those as well.
 Install and configure PostgreSQL:
 
