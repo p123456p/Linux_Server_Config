@@ -166,21 +166,32 @@ Create host config file sudo nano /etc/apache2/sites-available/catalog.conf
 paste the following:
 
 <VirtualHost *:80>
+
   ServerName 107.21.71.71
+  
   ServerAdmin admin@107.21.71.71
+  
   WSGIScriptAlias / /var/www/catalog/catalog.wsgi
+  
   <Directory /var/www/catalog/catalog/>
-      Order allow,deny
+  Order allow,deny
       Allow from all
   </Directory>
+  
   Alias /static /var/www/catalog/catalog/static
+  
   <Directory /var/www/catalog/catalog/static/>
       Order allow,deny
+      
       Allow from all
   </Directory>
+  
   ErrorLog ${APACHE_LOG_DIR}/error.log
+  
   LogLevel warn
+  
   CustomLog ${APACHE_LOG_DIR}/access.log combined
+  
 </VirtualHost>
 
 Create the wsgi file
