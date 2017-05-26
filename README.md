@@ -1,6 +1,7 @@
 # Linux_Server_Config
 
 public Ip: 107.21.71.71
+
 SSH PORT: 2200
 
 Steps to make project:
