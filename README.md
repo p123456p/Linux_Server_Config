@@ -181,9 +181,11 @@ paste the following:
   Alias /static /var/www/catalog/catalog/static
   
   <Directory /var/www/catalog/catalog/static/>
+  
       Order allow,deny
       
       Allow from all
+      
   </Directory>
   
   ErrorLog ${APACHE_LOG_DIR}/error.log
@@ -212,6 +214,7 @@ sudo service apache2 restart
 Clone Github Repo
 
 sudo git clone https://github.com/p123456/CatalogProject
+
 make .git inaccessible
 
 from cd /var/www/catalog/ create .htaccess file sudo nano .htaccess
