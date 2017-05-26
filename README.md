@@ -4,6 +4,8 @@ public Ip: 107.21.71.71
 
 SSH PORT: 2200
 
+Password:poojadubey
+
 Steps to make project:
 
 1.Start a new Ubuntu Linux server instance on Amazon Lightsail.
