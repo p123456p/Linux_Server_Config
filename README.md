@@ -23,7 +23,9 @@ sudo adduser grader
 
 sudo visudo
 inside the file add grader ALL=(ALL:ALL) ALL below the root user under "#User privilege specification"
+
 Add grader to /etc/sudoers.d/ and type in grader ALL=(ALL:ALL) ALLby command sudo nano /etc/sudoers.d/grader
+
 Add root to /etc/sudoers.d/ and type in root ALL=(ALL:ALL) ALLby command sudo nano /etc/sudoers.d/root
 
 5.Update all currently installed packages
@@ -228,33 +230,59 @@ Install and configure PostgreSQL:
 
 16.
 Install postgressudo apt-get install postgresql
+
 install additional modelssudo apt-get install postgresql-contrib
+
 by default no remote connections are not allowed
+
 config database_setup.py sudo nano database_setup.py
+
 python engine = create_engine('postgresql://catalog:db-password@localhost/catalog')
+
 repeat for project.py
+
 copy your main project.py file into the init.py file mv project.py __init__.py
+
 Add catalog user sudo adduser catalog
+
 17.
 login as postgres super usersudo su - postgres
+
 enter postgrespsql
+
 Create user catalogCREATE USER catalog WITH PASSWORD 'db-password';
+
 Change role of user catalog to creatDBALTER USER catalog CREATEDB;
+
 List all users and roles to verify\du
+
 Create new DB "catalog" with own of catalogCREATE DATABASE catalog WITH OWNER catalog;
+
 Connect to database\c catalog
+
 Revoke all rights REVOKE ALL ON SCHEMA public FROM public;
+
 Give accessto only catalog roleGRANT ALL ON SCHEMA public TO catalog;
+
 Quit postgres\q
+
 logout from postgres super userexit
+
 Setup your database schema python database_setup.py
+
 fix OAuth to work with hosted Application
 
 18.
 Google wont allow the IP address to make redirects so we need to set up the host name address to be usable.
+
 go to http://www.hcidata.info/host2ip.cgi to get your host name by entering your public IP address Udacity gave you.
+
 open apache configbfile sudo nano /etc/apache2/sites-available/catalog.conf
+
 below the ServerAdmin paste ServerAlias YOURHOSTNAME
+
 make sure the virtual host is enabled sudo a2ensite catalog
+
 restart apache server sudo service apache2 restart
+
 in your google developer console add your host name and IP address to Authorized Javascript origins. And add YOURHOSTNAME/ouath2callback to the Authorized redirect URIs.
